@@ -15,8 +15,8 @@ public class TestPercolation {
 
     @Test
     public void test_all_blocked() {
-        for (int i = 1; i <= 5; i++) {
-            for (int j = 1; j <= 5; j++) {
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 1; j <= 10; j++) {
                 assertFalse(p.isOpen(i, j));
                 assertFalse(p.isFull(i, j));
             }
@@ -27,6 +27,13 @@ public class TestPercolation {
     public void test_one_open() {
        p.open(1, 3);
        assertTrue(p.isOpen(1, 3));
+    }
+
+    @Test
+    public void test_adjacent_connected() {
+        p.open(1, 1);
+        p.open(2, 1);
+        assertTrue(p.isFull(2, 1));
     }
 
     @Test
@@ -51,8 +58,13 @@ public class TestPercolation {
     }
 
     @Test(expected= IndexOutOfBoundsException.class)
-    public void test_exception() {
+    public void test_overflow_exception() {
         p.open(11, 12);
+    }
+
+    @Test(expected= IndexOutOfBoundsException.class)
+    public void test_underflow_exception() {
+        p.open(0, -1);
     }
 
     @Test
@@ -76,14 +88,16 @@ public class TestPercolation {
     }
 
     @Test
-    public void test_one_node() {
+    public void test_one_node_blocked() {
         assertFalse(p1.isOpen(1, 1));
         assertFalse(p1.isFull(1, 1));
+    }
 
+    @Test
+    public void test_one_node_open() {
         p1.open(1, 1);
         assertTrue(p1.isOpen(1, 1));
         assertTrue(p1.isFull(1, 1));
-
         assertTrue(p1.percolates());
     }
 }

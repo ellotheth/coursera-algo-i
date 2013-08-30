@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# get java class to be tested
+[ $1 ] || (echo "Specify a class to be tested" && false) || exit 1
+
+# set the root directory for test classes
+testdir="../test"
+if [ $2 ]; then
+    testdir=`readlink -m $2`
+fi
+
+# create directory for current project tests: <test directory>/<project>
+dirname="$testdir/`basename $(readlink -m .)`"
+[ -d $dirname ] || mkdir -p $dirname \
+    || (echo "Failed to make test dir" && false) || exit 1
+
+# check for the test file; don't overwrite it if it exists already
+testfile="$dirname/Test$1.java"
+if [ -f $testfile ]; then
+    echo $testfile already exists
+    exit 1
+fi
+
+# spit out the junit test template
+cat > $testfile <<TEST
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
+
+public class Test$1 {
+
+    @Before
+    public void setUp() {}
+
+    @After
+    public void tearDown() {}
+
+    @Test
+    public void test() {}
+
+}
+
+TEST
+
+# symlink the test to the current project
+ln -s $testfile .

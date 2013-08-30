@@ -3,7 +3,48 @@
 ### [Algorithms I][1] ([Fall 2013][2])
 
 Unit tests for assignments and exercises in Coursera's Algorithms I class.
-Other related stuff:
+
+#### `maketest`
+
+My current directory structure has individual project folders (e.g. the
+Percolation assignment) at the top level of my _Algorithms I_ path. This repo
+of unit tests sits at the same level:
+
+    ~/algo4/percolation # percolation assignment
+    ~/algo4/unionfind   # union find exercise
+    ~/algo4/test        # this repo
+
+To make life easier, `maketest` can be run from a project folder to bootstrap a
+JUnit test class in the unit test directory and symlink it to the project:
+
+    $ cd ~/algo4/percolation
+    $ ls
+    Percolation.java Makefile
+    $ maketest Percolation ../test
+    $ ls
+    Percolation.java Makefile TestPercolation.java
+    $ ls -l
+    ... TestPercolation.java -> ../test/percolation/TestPercolation.java
+    $ cat TestPercolation.java
+    import static org.junit.Assert.*;
+    import org.junit.Test;
+    import org.junit.Before;
+    import org.junit.After;
+
+    public class TestPercolation {
+
+        @Before
+        public void setUp() {}
+
+        @After
+        public void tearDown() {}
+
+        @Test
+        public void test() {}
+
+    }
+
+#### Other related stuff:
 
  - Setup script [gist][3]
  - Makefile [gist][4]

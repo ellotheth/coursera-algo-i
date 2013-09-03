@@ -233,5 +233,24 @@ public class TestDeque {
             }
         }
     }
+
+    @Test
+    public void test_intermixed_with_iterator() {
+        d.addFirst(2);
+        d.addLast(3);
+        d.addLast(5);
+        d.removeLast();
+        d.addLast(4);
+        d.addFirst(0);
+        d.removeFirst();
+        d.addFirst(1);
+        d.removeFirst();
+        d.removeFirst();
+        d.removeLast();
+        d.removeLast();
+
+        for (Integer i : d) fail();
+    }
+
 }
 

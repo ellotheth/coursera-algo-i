@@ -218,5 +218,20 @@ public class TestDeque {
             assertSame(i, iter.next());
         }
     }
+
+    @Test
+    public void test_multiple_iterators() {
+        for (int i = 1; i <= 5; i++) d.addLast(i);
+
+        int x = 0, y = 0;
+        for (Integer i : d) {
+            x++;
+            y = 0;
+            for (Integer j : d) {
+                y++;
+                assertSame(x * y, i *j);
+            }
+        }
+    }
 }
 

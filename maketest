@@ -31,10 +31,10 @@ import org.junit.After;
 public class Test$1 {
 
     @Before
-    public void setUp() {}
+    public void set_up() {}
 
     @After
-    public void tearDown() {}
+    public void tear_down() {}
 
     @Test
     public void test() {}

@@ -45,9 +45,9 @@ public class TestBrute {
         b.add_point(new Point(1, 4));
         b.add_point(new Point(1, 5));
         
-        assertEquals(expected, b.print_line(3, 2, 0, 1));
-        assertEquals(expected, b.print_line(2, 0, 3, 1));
-        assertEquals(expected, b.print_line(3, 2, 1, 0));
+        assertEquals(expected, b.print_line(b.sort_line(3, 2, 0, 1)));
+        assertEquals(expected, b.print_line(b.sort_line(2, 0, 3, 1)));
+        assertEquals(expected, b.print_line(b.sort_line(3, 2, 1, 0)));
     }
 
     private class BruteTester extends Brute { }

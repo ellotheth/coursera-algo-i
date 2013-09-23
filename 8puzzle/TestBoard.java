@@ -88,6 +88,11 @@ public class TestBoard {
     }
 
     @Test
+    public void test_manhattan_in_order() {
+        assertEquals(0, board.manhattan());
+    }
+
+    @Test
     public void test_hamming_out_of_order_sample() {
         Board b = new Board(make_blocks(assign_sample, false));
         assertEquals(5, b.hamming());

@@ -34,7 +34,7 @@ public class TestBoard {
 
     @Test
     public void test_toString() {
-        String expected = N + "\n 0  1  2 \n 3  4  5 \n 6  7  8 \n";
+        String expected = N + "\n 1  2  3 \n 4  5  6 \n 7  8  0 \n";
         assertEquals(expected, board.toString());
     }
 
@@ -46,7 +46,7 @@ public class TestBoard {
     @Test
     public void test_not_isGoal() {
         Board b = new Board(make_blocks(null, true));
-        /* assertFalse(b.isGoal()); */
+        assertFalse(b.isGoal());
     }
 
     @Test
@@ -75,12 +75,16 @@ public class TestBoard {
         int[][] x = new int[N+1][N+1];
         b = new Board(x);
         assertFalse(board.equals(b));
+
+        assertFalse(board.equals(null));
     }
 
     private int[][] make_blocks(int[] vals, boolean shuffle) {
         if (vals == null) {
             vals = new int[N*N];
-            for (int i = 0; i < vals.length; i++) vals[i] = i;
+            for (int i = 0; i < vals.length; i++) {
+                vals[i] = (i == vals.length - 1) ? 0 : i + 1;
+            }
         } else if (vals.length != N*N) {
             throw new IllegalArgumentException("Need " + N*N + " values");
         }

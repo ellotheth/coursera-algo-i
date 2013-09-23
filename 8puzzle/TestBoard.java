@@ -127,6 +127,17 @@ public class TestBoard {
         assertEquals(5, b.manhattan());
     }
 
+    @Test
+    public void test_iterator_in_order() {
+        for (Board neighbor : board.neighbors()) {
+            assertFalse(board.equals(neighbor));
+            assertFalse(neighbor.isGoal());
+            assertEquals(N, neighbor.dimension());
+            assertEquals(1, neighbor.hamming());
+            assertEquals(1, neighbor.manhattan());
+        }
+    }
+
     private int[][] make_blocks(int[] vals, boolean shuffle) {
         if (vals == null) {
             vals = new int[N*N];

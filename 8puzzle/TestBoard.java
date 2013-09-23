@@ -7,6 +7,9 @@ public class TestBoard {
     Board board;
     int N = 3;
 
+    /* http://coursera.cs.princeton.edu/algs4/assignments/8puzzle.html */
+    int[] assign_sample = new int[]{8, 1, 3, 4, 0, 2, 7, 6, 5};
+
     @Before
     public void set_up() {
         board = new Board(make_blocks(null, false));
@@ -77,6 +80,46 @@ public class TestBoard {
         assertFalse(board.equals(b));
 
         assertFalse(board.equals(null));
+    }
+
+    @Test
+    public void test_hamming_in_order() {
+        assertEquals(0, board.hamming());
+    }
+
+    @Test
+    public void test_hamming_out_of_order_sample() {
+        Board b = new Board(make_blocks(assign_sample, false));
+        assertEquals(5, b.hamming());
+    }
+
+    @Test
+    public void test_manhattan_out_of_order_sample() {
+        Board b = new Board(make_blocks(assign_sample, false));
+        assertEquals(10, b.manhattan());
+    }
+
+    @Test
+    public void test_manhattan_out_of_order_reversed() {
+        int[] x = new int[]{0, 8, 7, 6, 5, 4, 3, 2, 1};
+        Board b = new Board(make_blocks(x, false));
+        assertEquals(20, b.manhattan());
+    }
+
+    /* http://coursera.cs.princeton.edu/algs4/testing/8puzzle/puzzle04.txt */
+    @Test
+    public void test_manhattan_out_of_order_puzzle04() {
+        int[] x = new int[]{0, 1, 3, 4, 2, 5, 7, 8, 6};
+        Board b = new Board(make_blocks(x, false));
+        assertEquals(4, b.manhattan());
+    }
+
+    /* http://coursera.cs.princeton.edu/algs4/testing/8puzzle/puzzle05.txt */
+    @Test
+    public void test_manhattan_out_of_order_puzzle05() {
+        int[] x = new int[]{4, 1, 3, 0, 2, 6, 7, 5, 8};
+        Board b = new Board(make_blocks(x, false));
+        assertEquals(5, b.manhattan());
     }
 
     private int[][] make_blocks(int[] vals, boolean shuffle) {

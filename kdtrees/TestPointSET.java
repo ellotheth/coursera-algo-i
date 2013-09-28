@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
@@ -41,6 +43,59 @@ public class TestPointSET {
         assertEquals(new Point2D(0.4, 0.1), set.nearest(new Point2D(0.3, 0.1)));
         assertEquals(new Point2D(0.4, 0.5), set.nearest(new Point2D(0.4, 0.5)));
         assertEquals(new Point2D(0.4, 0.5), set.nearest(new Point2D(0.6, 0.6)));
+    }
+
+    @Test
+    public void test_range_lower_left() {
+        RectHV rect = new RectHV(0.0, 0.0, 0.2, 0.3);
+        Iterator<Point2D> iter = set.range(rect).iterator();
+        assertTrue(iter.hasNext());
+        assertEquals(new Point2D(0.1, 0.1), iter.next());
+        assertFalse(iter.hasNext());
+
+        rect = new RectHV(0.1, 0.1, 0.2, 0.3);
+        iter = set.range(rect).iterator();
+        assertTrue(iter.hasNext());
+        assertEquals(new Point2D(0.1, 0.1), iter.next());
+        assertFalse(iter.hasNext());
+    }
+
+    @Test
+    public void test_range_bottom() {
+        RectHV rect = new RectHV(0.0, 0.0, 0.5, 0.2);
+        Iterator<Point2D> iter = set.range(rect).iterator();
+
+        assertTrue(iter.hasNext());
+        assertEquals(new Point2D(0.4, 0.1), iter.next());
+
+        assertTrue(iter.hasNext());
+        assertEquals(new Point2D(0.1, 0.1), iter.next());
+        
+        assertFalse(iter.hasNext());
+    }
+
+    @Test
+    public void test_range_all() {
+        RectHV rect = new RectHV(0.1, 0.1, 0.5, 0.5);
+        Iterator<Point2D> iter = set.range(rect).iterator();
+
+        assertTrue(iter.hasNext());
+        assertEquals(new Point2D(0.4, 0.5), iter.next());
+
+        assertTrue(iter.hasNext());
+        assertEquals(new Point2D(0.4, 0.1), iter.next());
+
+        assertTrue(iter.hasNext());
+        assertEquals(new Point2D(0.1, 0.1), iter.next());
+        
+        assertFalse(iter.hasNext());
+    }
+
+    @Test
+    public void test_range_empty() {
+        RectHV rect = new RectHV(0.1, 0.2, 0.3, 0.5);
+        Iterator<Point2D> iter = set.range(rect).iterator();
+        assertFalse(iter.hasNext());
     }
 }
 

@@ -149,5 +149,44 @@ public class TestKdTree {
         Iterator<Point2D> iter = k.range(new RectHV(.4, .4, 1, 1)).iterator();
         assertFalse(iter.hasNext());
     }
+
+    @Test
+    public void test_empty_nearest() {
+        assertNull(k.nearest(new Point2D(0, 0)));
+    }
+
+    @Test
+    public void test_nearest_single() {
+        Point2D p = new Point2D(0, 0);
+        k.insert(p);
+        assertTrue(p.equals(k.nearest(new Point2D(1, 1))));
+        assertTrue(p.equals(k.nearest(p)));
+    }
+
+    @Test
+    public void test_nearest_multiple_exact() {
+        Point2D[] points = get_points();
+        for (Point2D point : points) k.insert(point);
+
+        for (Point2D point : points) assertTrue(point.equals(k.nearest(point)));
+    }
+
+    @Test
+    public void test_nearest_multiple() {
+        Point2D[] points = new Point2D[]{
+            new Point2D(.5, .5),
+            new Point2D(.7, .8),
+            new Point2D(.1, .1),
+            new Point2D(1, 0),
+            new Point2D(.3, .9),
+        };
+        for (Point2D point : points) k.insert(point);
+
+        assertTrue(points[0].equals(k.nearest(new Point2D(.6, .6))));
+        assertTrue(points[3].equals(k.nearest(new Point2D(.6, 0))));
+        assertTrue(points[4].equals(k.nearest(new Point2D(0, 1))));
+        assertTrue(points[2].equals(k.nearest(new Point2D(.2, .2))));
+        assertTrue(points[1].equals(k.nearest(new Point2D(1, 1))));
+    }
 }
 
